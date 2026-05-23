@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ==========================================================================
-   BSA v3.1 — Full Creative Overhaul + User Feedback
+   BSA v4.0 — Gallery, Events, Testimonials, Donate, News + Micro-interactions
    ========================================================================== */
 :root {
   --navy-deep: #060e23;
@@ -426,6 +426,82 @@ body {
 .footer-bottom { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.32em; color: rgba(252,248,238,0.22); }
 .footer-dia { display: inline-block; width: 3px; height: 3px; background: var(--gold-deep); transform: rotate(45deg); margin: 0 12px; vertical-align: middle; opacity: 0.4; }
 .footer-version { font-family: var(--font-mono); font-size: 8px; text-transform: uppercase; letter-spacing: 0.35em; color: rgba(252,248,238,0.12); margin-top: 10px; }
+/* === Photo Gallery === */
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.gallery-item { position: relative; overflow: hidden; border-radius: 4px; cursor: pointer; aspect-ratio: 4/3; background: var(--cream-2); border: 1px solid var(--line); }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s var(--ease-out), filter 0.6s ease; }
+.gallery-item:hover img { transform: scale(1.06); filter: brightness(1.08); }
+.gallery-item::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(6,14,35,0.5) 100%); opacity: 0; transition: opacity 0.4s ease; pointer-events: none; }
+.gallery-item:hover::after { opacity: 1; }
+.gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 14px 16px; z-index: 2; font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--cream); opacity: 0; transform: translateY(8px); transition: all 0.4s var(--ease-out); }
+.gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
+.gallery-item.span-2 { grid-column: span 2; }
+.lightbox { position: fixed; inset: 0; background: rgba(6,14,35,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 99990; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.4s ease; cursor: zoom-out; }
+.lightbox.active { opacity: 1; visibility: visible; }
+.lightbox img { max-width: 88vw; max-height: 85vh; object-fit: contain; border-radius: 4px; box-shadow: 0 20px 80px rgba(0,0,0,0.5); transform: scale(0.9); transition: transform 0.5s var(--ease-spring); }
+.lightbox.active img { transform: scale(1); }
+.lightbox-close { position: absolute; top: 28px; right: 28px; width: 44px; height: 44px; border: 1px solid rgba(252,248,238,0.2); border-radius: 50%; background: rgba(6,14,35,0.6); color: var(--cream); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+.lightbox-close:hover { background: rgba(230,186,86,0.2); border-color: rgba(230,186,86,0.4); }
+.lightbox-caption { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(252,248,238,0.5); text-align: center; }
+.lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border: 1px solid rgba(252,248,238,0.15); border-radius: 50%; background: rgba(6,14,35,0.5); color: var(--cream); font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+.lightbox-nav:hover { background: rgba(230,186,86,0.15); border-color: rgba(230,186,86,0.3); }
+.lightbox-nav.prev { left: 24px; }
+.lightbox-nav.next { right: 24px; }
+/* === Events Section === */
+.events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.event-card { background: var(--paper); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; transition: all 0.5s var(--ease-out); position: relative; }
+.event-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(6,14,35,0.08); border-color: rgba(160,120,35,0.2); }
+.event-date-bar { display: flex; align-items: center; gap: 14px; padding: 18px 24px; background: linear-gradient(135deg, var(--navy-deep), var(--navy-mid)); color: var(--cream); }
+.event-date-day { font-family: var(--font-display); font-size: 42px; font-weight: 600; line-height: 1; color: var(--gold-bright); }
+.event-date-meta { display: flex; flex-direction: column; }
+.event-date-month { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(252,248,238,0.6); }
+.event-date-weekday { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(252,248,238,0.35); }
+.event-body { padding: 24px; }
+.event-card h3 { font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+.event-card p { font-size: 14px; line-height: 1.7; color: var(--ink-soft); margin-bottom: 14px; }
+.event-meta { display: flex; flex-wrap: wrap; gap: 12px; }
+.event-meta-item { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); }
+.event-meta-icon { font-size: 14px; }
+.event-status { display: inline-block; font-family: var(--font-mono); font-size: 8px; text-transform: uppercase; letter-spacing: 0.2em; padding: 4px 12px; border-radius: 999px; margin-top: 12px; }
+.event-status.upcoming { background: rgba(111,163,74,0.1); color: #5a8c3e; border: 1px solid rgba(111,163,74,0.25); }
+.event-status.recurring { background: rgba(79,136,182,0.1); color: #3e72a0; border: 1px solid rgba(79,136,182,0.25); }
+/* === Testimonials === */
+.testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.testimonial-card { background: linear-gradient(135deg, var(--paper) 0%, rgba(252,248,238,0.9) 100%); border: 1px solid var(--line); padding: 36px 32px; border-radius: 4px; position: relative; transition: all 0.5s var(--ease-out); }
+.testimonial-card::before { content: "\201C"; font-family: var(--font-display); font-size: 100px; line-height: 0.5; color: var(--gold-bright); opacity: 0.12; position: absolute; top: 28px; left: 24px; }
+.testimonial-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(6,14,35,0.08); border-color: rgba(160,120,35,0.2); }
+.testimonial-text { font-family: var(--font-display); font-style: italic; font-size: 18px; line-height: 1.6; color: var(--ink); margin-bottom: 24px; position: relative; z-index: 2; }
+.testimonial-author { display: flex; align-items: center; gap: 14px; }
+.testimonial-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--navy-mid), var(--navy-edge)); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--gold-bright); flex-shrink: 0; }
+.testimonial-name { font-family: var(--font-sans); font-size: 14px; font-weight: 500; color: var(--ink); }
+.testimonial-role { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-top: 2px; }
+/* === Donate Section (Enhanced) === */
+.donate-section { background: radial-gradient(ellipse at 50% 0%, rgba(26,39,70,0.6), transparent 60%), radial-gradient(ellipse at center, var(--navy-edge) 0%, var(--navy-mid) 50%, var(--navy-deep) 100%); padding: var(--gutter) 70px; position: relative; z-index: 2; color: var(--cream); overflow: hidden; text-align: center; }
+.donate-inner { max-width: 780px; margin: 0 auto; }
+.donate-section h2 { font-family: var(--font-display); font-size: 52px; font-weight: 600; color: var(--cream); margin-bottom: 20px; line-height: 1.1; }
+.donate-section .italic-accent { color: var(--gold-bright); }
+.donate-desc { font-size: 17px; line-height: 1.75; color: rgba(252,248,238,0.6); margin-bottom: 40px; max-width: 640px; margin-left: auto; margin-right: auto; }
+.donate-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 36px; }
+.donate-option { padding: 28px 20px; border: 1px solid rgba(230,186,86,0.12); border-radius: 4px; background: rgba(26,39,70,0.4); transition: all 0.4s var(--ease-out); }
+.donate-option:hover { border-color: rgba(230,186,86,0.3); background: rgba(26,39,70,0.6); transform: translateY(-4px); }
+.donate-option-icon { font-size: 28px; margin-bottom: 12px; display: block; }
+.donate-option h4 { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--cream); margin-bottom: 8px; }
+.donate-option p { font-size: 13px; line-height: 1.6; color: rgba(252,248,238,0.5); }
+.donate-etransfer-box { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; color: rgba(252,248,238,0.7); padding: 18px 28px; background: rgba(230,186,86,0.06); border: 1px solid rgba(230,186,86,0.15); border-radius: 4px; display: inline-block; }
+.donate-etransfer-box strong { color: var(--gold-bright); font-weight: 500; }
+/* === News Section === */
+.news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.news-card { background: var(--paper); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; transition: all 0.5s var(--ease-out); position: relative; }
+.news-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(6,14,35,0.08); border-color: rgba(160,120,35,0.2); }
+.news-card-img { height: 180px; background: linear-gradient(135deg, var(--navy-mid), var(--navy-edge)); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+.news-card-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(6,14,35,0.3) 100%); }
+.news-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-out); }
+.news-card:hover .news-card-img img { transform: scale(1.05); }
+.news-source-badge { position: absolute; top: 14px; left: 14px; z-index: 2; font-family: var(--font-mono); font-size: 8px; text-transform: uppercase; letter-spacing: 0.2em; padding: 4px 12px; border-radius: 999px; background: rgba(6,14,35,0.7); backdrop-filter: blur(8px); color: rgba(252,248,238,0.7); border: 1px solid rgba(252,248,238,0.1); }
+.news-card-body { padding: 24px; }
+.news-date { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--gold-deep); margin-bottom: 8px; display: block; }
+.news-card h3 { font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--ink); margin-bottom: 10px; line-height: 1.25; }
+.news-card p { font-size: 14px; line-height: 1.7; color: var(--ink-soft); }
 /* === Scroll Reveal === */
 .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -447,7 +523,11 @@ body {
   .section-header { grid-template-columns: 1fr; }
   .section-num { position: absolute; top: -8px; left: -4px; font-size: 56px; }
   .section-header h2 { font-size: 38px; padding-top: 10px; }
-  .principles-grid, .heritage-grid, .impact-grid { grid-template-columns: 1fr; }
+  .principles-grid, .heritage-grid, .impact-grid, .testimonials-grid, .events-grid, .news-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-item.span-2 { grid-column: span 1; }
+  .donate-options { grid-template-columns: 1fr; }
+  .donate-section { padding: 56px 28px; }
   .programs-grid { grid-template-columns: 1fr; }
   .schedule-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; }
@@ -490,11 +570,11 @@ body {
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#impact">Impact</a></li>
-    <li><a href="#values">Values</a></li>
-    <li><a href="#heritage">Heritage</a></li>
     <li><a href="#programs">Programs</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#donate">Donate</a></li>
     <li><a href="volunteer.html">Volunteer</a></li>
-    <li><a href="#involve">Get Involved</a></li>
+    <li><a href="#involve">Contact</a></li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="Open menu"><span></span><span></span><span></span></button>
 </nav>
@@ -502,11 +582,11 @@ body {
 <div class="mobile-overlay" id="mobileMenu">
   <a href="#about" class="mob-link">About</a>
   <a href="#impact" class="mob-link">Impact</a>
-  <a href="#values" class="mob-link">Values</a>
-  <a href="#heritage" class="mob-link">Heritage</a>
   <a href="#programs" class="mob-link">Programs</a>
+  <a href="#events" class="mob-link">Events</a>
+  <a href="#donate" class="mob-link">Donate</a>
   <a href="volunteer.html" class="mob-link">Volunteer</a>
-  <a href="#involve" class="mob-link">Get Involved</a>
+  <a href="#involve" class="mob-link">Contact</a>
 </div>
 <div class="page-sheet">
   <!-- ==================== HERO ==================== -->
@@ -554,7 +634,7 @@ body {
         <div class="about-tags reveal">
           <span class="about-tag"><span class="tag-dot" style="background:var(--ring-green)"></span>Seva First</span>
           <span class="about-tag"><span class="tag-dot" style="background:var(--ring-orange)"></span>Open to All</span>
-          <span class="about-tag"><span class="tag-dot" style="background:var(--ring-blue)"></span>Since 2018</span>
+          <span class="about-tag"><span class="tag-dot" style="background:var(--ring-blue)"></span>Since 2022</span>
           <span class="about-tag"><span class="tag-dot" style="background:var(--ring-gold)"></span>Cape Breton</span>
         </div>
       </div>
@@ -590,16 +670,6 @@ body {
           <span class="eyebrow-light">Officially Recognised</span>
           <h3>CBRM Community Award</h3>
           <p>The Cape Breton Regional Municipality officially recognised BSA for outstanding community service during and after Hurricane Fiona. A proud moment for our sangat.</p>
-        </div>
-      </div>
-      <div class="impact-photos stagger">
-        <div class="impact-photo reveal">
-          <img src="clothing-drive.jpg" alt="BSA Winter Clothing Drive volunteers" onerror="this.style.background='var(--navy-edge)';this.style.minHeight='200px';this.alt='Photo: Clothing drive';">
-          <div class="impact-photo-caption">BSA volunteers during the Winter Clothing Drive</div>
-        </div>
-        <div class="impact-photo reveal">
-          <img src="cbc-interview.jpg" alt="BSA featured on CBC News Cape Breton" onerror="this.style.background='var(--navy-edge)';this.style.minHeight='200px';this.alt='Photo: CBC interview';">
-          <div class="impact-photo-caption">Featured on CBC News Cape Breton</div>
         </div>
       </div>
     </div>
@@ -672,7 +742,7 @@ body {
       <div class="heritage-grid stagger">
         <div class="heritage-card reveal">
           <div class="heritage-symbol">
-            <img src="khanda.png" alt="The Khanda" style="width:64px;height:auto;border-radius:8px;" onerror="this.style.display='none'">
+            <img src="khanda.png" alt="The Khanda" style="width:48px;height:48px;object-fit:contain;filter:brightness(1.2);" onerror="this.style.display='none'">
           </div>
           <span class="eyebrow">The Khanda</span>
           <h3>Symbol of the Khalsa</h3>
@@ -706,11 +776,53 @@ body {
       </div>
     </div>
   </section>
+  <div class="stripe"><span></span><span></span><span></span><span></span></div>
+  <!-- ==================== PHOTO GALLERY ==================== -->
+  <section class="section grain" id="gallery">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <span class="section-num">05</span>
+        <span class="eyebrow">Gallery &middot; Moments That Matter</span>
+        <h2>Our community<br>in <span class="italic-accent">action</span></h2>
+        <span class="gold-bar"></span>
+      </div>
+      <div class="gallery-grid stagger">
+        <div class="gallery-item span-2 reveal" onclick="openLightbox(0)">
+          <img src="clothing-drive.jpg" alt="BSA Winter Clothing Drive" onerror="this.parentElement.style.background='linear-gradient(135deg, var(--navy-mid), var(--navy-edge))';this.style.display='none';">
+          <span class="gallery-caption">Winter Clothing Drive &middot; Cape Breton 2022</span>
+        </div>
+        <div class="gallery-item reveal" onclick="openLightbox(1)">
+          <img src="cbc-interview.jpg" alt="BSA on CBC News" onerror="this.parentElement.style.background='linear-gradient(135deg, var(--navy-mid), var(--navy-edge))';this.style.display='none';">
+          <span class="gallery-caption">CBC News Feature</span>
+        </div>
+        <div class="gallery-item reveal" onclick="openLightbox(2)">
+          <img src="photo_2026-05-21 10.52.39.jpeg" alt="BSA Community Langar" onerror="this.parentElement.style.background='linear-gradient(135deg, var(--navy-mid), var(--navy-edge))';this.style.display='none';">
+          <span class="gallery-caption">BSA Community</span>
+        </div>
+        <div class="gallery-item reveal" onclick="openLightbox(3)">
+          <img src="photo_2026-05-21 10.52.43.jpeg" alt="BSA Volunteers" onerror="this.parentElement.style.background='linear-gradient(135deg, var(--navy-mid), var(--navy-edge))';this.style.display='none';">
+          <span class="gallery-caption">Our Volunteers</span>
+        </div>
+        <div class="gallery-item span-2 reveal" onclick="openLightbox(4)">
+          <img src="clothing-drive.jpg" alt="BSA Community Service" onerror="this.parentElement.style.background='linear-gradient(135deg, var(--navy-mid), var(--navy-edge))';this.style.display='none';">
+          <span class="gallery-caption">Serving Cape Breton with Love</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+    <button class="lightbox-nav prev" onclick="navLightbox(event,-1)">&#8249;</button>
+    <img id="lightboxImg" src="" alt="">
+    <button class="lightbox-nav next" onclick="navLightbox(event,1)">&#8250;</button>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
   <!-- ==================== PROGRAMS ==================== -->
   <section class="section grain" id="programs">
     <div class="section-inner">
       <div class="section-header reveal">
-        <span class="section-num">05</span>
+        <span class="section-num">06</span>
         <span class="eyebrow">What We Do &middot; Programs &amp; Initiatives</span>
         <h2>Making a tangible<br><span class="italic-accent">impact</span> in Cape Breton</h2>
         <span class="gold-bar"></span>
@@ -762,6 +874,117 @@ body {
     </div>
   </section>
   <div class="stripe"><span></span><span></span><span></span><span></span></div>
+  <!-- ==================== UPCOMING EVENTS ==================== -->
+  <section class="section section-alt grain" id="events">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <span class="section-num">07</span>
+        <span class="eyebrow">Upcoming &middot; Events Calendar</span>
+        <h2>What&rsquo;s happening<br><span class="italic-accent">next</span></h2>
+        <span class="gold-bar"></span>
+      </div>
+      <div class="events-grid stagger">
+        <div class="event-card reveal">
+          <div class="event-date-bar">
+            <span class="event-date-day">07</span>
+            <div class="event-date-meta">
+              <span class="event-date-month">June 2026</span>
+              <span class="event-date-weekday">Sunday</span>
+            </div>
+          </div>
+          <div class="event-body">
+            <h3>Monthly Community Langar</h3>
+            <p>Join us for a free vegetarian meal prepared with love by BSA volunteers. Open to everyone regardless of faith or background.</p>
+            <div class="event-meta">
+              <span class="event-meta-item"><span class="event-meta-icon">&#128205;</span> Sydney, Cape Breton</span>
+              <span class="event-meta-item"><span class="event-meta-icon">&#128336;</span> 12:00 PM &ndash; 3:00 PM</span>
+            </div>
+            <span class="event-status recurring">Monthly</span>
+          </div>
+        </div>
+        <div class="event-card reveal">
+          <div class="event-date-bar">
+            <span class="event-date-day">14</span>
+            <div class="event-date-meta">
+              <span class="event-date-month">June 2026</span>
+              <span class="event-date-weekday">Saturday</span>
+            </div>
+          </div>
+          <div class="event-body">
+            <h3>Summer Beach Clean-Up</h3>
+            <p>Help us clean up Dominion Beach as part of our environmental seva program. Bring the family and make a difference together.</p>
+            <div class="event-meta">
+              <span class="event-meta-item"><span class="event-meta-icon">&#128205;</span> Dominion Beach</span>
+              <span class="event-meta-item"><span class="event-meta-icon">&#128336;</span> 10:00 AM &ndash; 1:00 PM</span>
+            </div>
+            <span class="event-status upcoming">Upcoming</span>
+          </div>
+        </div>
+        <div class="event-card reveal">
+          <div class="event-date-bar">
+            <span class="event-date-day">21</span>
+            <div class="event-date-meta">
+              <span class="event-date-month">June 2026</span>
+              <span class="event-date-weekday">Sunday</span>
+            </div>
+          </div>
+          <div class="event-body">
+            <h3>Youth Workshop &amp; Mentorship</h3>
+            <p>A day of learning, leadership workshops, and mentorship pairing for young people in the Cape Breton community.</p>
+            <div class="event-meta">
+              <span class="event-meta-item"><span class="event-meta-icon">&#128205;</span> Sydney, Cape Breton</span>
+              <span class="event-meta-item"><span class="event-meta-icon">&#128336;</span> 2:00 PM &ndash; 5:00 PM</span>
+            </div>
+            <span class="event-status upcoming">Upcoming</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="stripe"><span></span><span></span><span></span><span></span></div>
+  <!-- ==================== TESTIMONIALS ==================== -->
+  <section class="section section-warm grain" id="testimonials">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <span class="section-num">08</span>
+        <span class="eyebrow">Community Voices &middot; What People Say</span>
+        <h2>Stories from our<br><span class="italic-accent">community</span></h2>
+        <span class="gold-bar"></span>
+      </div>
+      <div class="testimonials-grid stagger">
+        <div class="testimonial-card reveal">
+          <p class="testimonial-text">When Fiona hit and we lost power for days, BSA showed up with hot meals and warm clothing. They didn&rsquo;t ask who we were or where we came from. That&rsquo;s real community.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">MC</div>
+            <div>
+              <div class="testimonial-name">Margaret C.</div>
+              <div class="testimonial-role">Cape Breton Resident</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal">
+          <p class="testimonial-text">Volunteering with BSA changed my perspective completely. The langar events bring together people from every background, and the energy in the room is something you have to experience to understand.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">JR</div>
+            <div>
+              <div class="testimonial-name">James R.</div>
+              <div class="testimonial-role">BSA Volunteer</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal">
+          <p class="testimonial-text">As a newcomer to Cape Breton, BSA was the first group that made me feel at home. They helped me find my footing and connected me with people who genuinely cared.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">PS</div>
+            <div>
+              <div class="testimonial-name">Priya S.</div>
+              <div class="testimonial-role">Community Member</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <!-- ==================== QUOTE ==================== -->
   <div class="quote-section">
     <div class="quote-inner">
@@ -772,11 +995,92 @@ body {
       </div>
     </div>
   </div>
+  <!-- ==================== DONATE ==================== -->
+  <div class="donate-section" id="donate">
+    <div class="bokeh b1"></div><div class="bokeh b3"></div><div class="bokeh b5"></div>
+    <div class="stripe" style="position:absolute;top:0;left:0;right:0;z-index:2;"><span></span><span></span><span></span><span></span></div>
+    <div class="donate-inner reveal">
+      <span style="font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.3em;color:rgba(230,186,86,0.5);display:block;margin-bottom:16px;">Support Our Mission</span>
+      <h2>Help us keep the<br><span class="italic-accent">langar running</span></h2>
+      <p class="donate-desc">Every contribution helps us feed families, support newcomers, fund youth programs, and build toward a permanent gurdwara on Cape Breton Island. No amount is too small.</p>
+      <div class="donate-options stagger">
+        <div class="donate-option reveal">
+          <span class="donate-option-icon">&#128177;</span>
+          <h4>E-Transfer</h4>
+          <p>Send directly via Interac e-transfer &mdash; the fastest way to support our work</p>
+        </div>
+        <div class="donate-option reveal">
+          <span class="donate-option-icon">&#127793;</span>
+          <h4>Monthly Giving</h4>
+          <p>Set up a recurring e-transfer to provide steady support for our programs</p>
+        </div>
+        <div class="donate-option reveal">
+          <span class="donate-option-icon">&#129309;</span>
+          <h4>In-Kind Donations</h4>
+          <p>Clothing, food supplies, and household items are always welcome and appreciated</p>
+        </div>
+      </div>
+      <div class="donate-etransfer-box reveal">
+        <strong>E-Transfer:</strong> bretonsikhassociation@gmail.com
+      </div>
+      <div style="margin-top:24px;" class="reveal">
+        <a href="mailto:bretonsikhassociation@gmail.com?subject=Donation%20Inquiry" class="btn btn-gold">Donate Now</a>
+      </div>
+    </div>
+    <div class="stripe" style="position:absolute;bottom:0;left:0;right:0;z-index:2;"><span></span><span></span><span></span><span></span></div>
+  </div>
+  <!-- ==================== NEWS ==================== -->
+  <section class="section grain" id="news">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <span class="section-num">09</span>
+        <span class="eyebrow">In The Press &middot; Latest News</span>
+        <h2>BSA in the<br><span class="italic-accent">headlines</span></h2>
+        <span class="gold-bar"></span>
+      </div>
+      <div class="news-grid stagger">
+        <div class="news-card reveal">
+          <div class="news-card-img">
+            <span class="news-source-badge">CBC News</span>
+            <img src="cbc-interview.jpg" alt="BSA on CBC News" onerror="this.style.display='none'">
+          </div>
+          <div class="news-card-body">
+            <span class="news-date">September 2022</span>
+            <h3>Cape Breton Sikh Community Steps Up After Fiona</h3>
+            <p>CBC News featured BSA&rsquo;s emergency response efforts, highlighting how volunteers cooked and delivered hundreds of meals to families in need.</p>
+          </div>
+        </div>
+        <div class="news-card reveal">
+          <div class="news-card-img">
+            <span class="news-source-badge">SaltWire</span>
+            <img src="clothing-drive.jpg" alt="BSA Clothing Drive" onerror="this.style.display='none'">
+          </div>
+          <div class="news-card-body">
+            <span class="news-date">Winter 2022</span>
+            <h3>Newcomers Give Back: BSA Winter Clothing Drive</h3>
+            <p>SaltWire Atlantic Canada covered BSA&rsquo;s winter clothing drive, sharing the story of newcomers giving back to their adopted home.</p>
+          </div>
+        </div>
+        <div class="news-card reveal">
+          <div class="news-card-img">
+            <span class="news-source-badge">The PIE News</span>
+            <img src="photo_2026-05-21 10.52.39.jpeg" alt="BSA Community" onerror="this.style.display='none'">
+          </div>
+          <div class="news-card-body">
+            <span class="news-date">2022</span>
+            <h3>Community Strength Through Service</h3>
+            <p>The PIE News highlighted BSA as an example of how community organisations can mobilise quickly to support neighbours in crisis.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="stripe"><span></span><span></span><span></span><span></span></div>
   <!-- ==================== GET INVOLVED ==================== -->
   <section class="section section-warm grain" id="involve">
     <div class="section-inner">
       <div class="section-header reveal">
-        <span class="section-num">07</span>
+        <span class="section-num">10</span>
         <span class="eyebrow">Connect &middot; Get Involved</span>
         <h2>Be part of something<br><span class="italic-accent">beautiful</span></h2>
         <span class="gold-bar"></span>
@@ -805,7 +1109,7 @@ body {
   <section class="section grain" id="visit">
     <div class="section-inner">
       <div class="section-header reveal">
-        <span class="section-num">08</span>
+        <span class="section-num">11</span>
         <span class="eyebrow">Visit &middot; Find Us</span>
         <h2>Tea is on. <span class="italic-accent">Come early.</span></h2>
         <span class="gold-bar"></span>
@@ -834,11 +1138,11 @@ body {
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Navigate</div>
-        <a href="#about">About Us</a><a href="#impact">Our Impact</a><a href="#values">Our Values</a><a href="#heritage">Heritage</a><a href="#programs">Programs</a><a href="volunteer.html">Volunteer</a>
+        <a href="#about">About Us</a><a href="#impact">Our Impact</a><a href="#programs">Programs</a><a href="#events">Events</a><a href="#gallery">Gallery</a><a href="#news">News</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Get Involved</div>
-        <a href="#involve">Volunteer</a><a href="mailto:bretonsikhassociation@gmail.com?subject=Donation%20Inquiry">Donate</a><a href="mailto:bretonsikhassociation@gmail.com?subject=Partnership">Partner</a><a href="volunteer.html">Onboarding</a>
+        <a href="volunteer.html">Volunteer</a><a href="#donate">Donate</a><a href="mailto:bretonsikhassociation@gmail.com?subject=Partnership">Partner</a><a href="#testimonials">Testimonials</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Contact</div>
@@ -848,7 +1152,7 @@ body {
     </div>
     <div class="footer-bottom-bar">
       <div class="footer-bottom">Cape Breton<span class="footer-dia"></span>Nova Scotia<span class="footer-dia"></span>Canada</div>
-      <div class="footer-version">v3.1</div>
+      <div class="footer-version">v4.0</div>
     </div>
   </footer>
 </div>
@@ -875,11 +1179,65 @@ body {
   stats.forEach(function(el) { cObs.observe(el); });
   document.querySelectorAll('a[href^="#"]').forEach(function(a) { a.addEventListener('click', function(e) { var t = document.querySelector(this.getAttribute('href')); if (t) { e.preventDefault(); window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' }); } }); });
   window.handleForm = function(e) { e.preventDefault(); var n = document.getElementById('fname').value, em = document.getElementById('femail').value, m = document.getElementById('fmessage').value; window.location.href = 'mailto:bretonsikhassociation@gmail.com?subject=' + encodeURIComponent('Message from ' + n) + '&body=' + encodeURIComponent('From: ' + n + '\nEmail: ' + em + '\n\n' + m); };
+  // Lightbox
+  var galleryItems = document.querySelectorAll('.gallery-item');
+  var galleryData = [];
+  galleryItems.forEach(function(item) {
+    var img = item.querySelector('img');
+    var cap = item.querySelector('.gallery-caption');
+    galleryData.push({ src: img ? img.src : '', alt: img ? img.alt : '', caption: cap ? cap.textContent : '' });
+  });
+  var currentSlide = 0;
+  window.openLightbox = function(idx) {
+    currentSlide = idx;
+    var lb = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightboxImg');
+    var lbCap = document.getElementById('lightboxCaption');
+    lbImg.src = galleryData[idx].src;
+    lbImg.alt = galleryData[idx].alt;
+    lbCap.textContent = galleryData[idx].caption;
+    lb.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+  window.closeLightbox = function(e) {
+    if (e.target.classList.contains('lightbox') || e.target.classList.contains('lightbox-close')) {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  };
+  window.navLightbox = function(e, dir) {
+    e.stopPropagation();
+    currentSlide = (currentSlide + dir + galleryData.length) % galleryData.length;
+    var lbImg = document.getElementById('lightboxImg');
+    var lbCap = document.getElementById('lightboxCaption');
+    lbImg.src = galleryData[currentSlide].src;
+    lbImg.alt = galleryData[currentSlide].alt;
+    lbCap.textContent = galleryData[currentSlide].caption;
+  };
+  document.addEventListener('keydown', function(e) {
+    var lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('active')) return;
+    if (e.key === 'Escape') { lb.classList.remove('active'); document.body.style.overflow = ''; }
+    if (e.key === 'ArrowLeft') navLightbox(e, -1);
+    if (e.key === 'ArrowRight') navLightbox(e, 1);
+  });
+  // Parallax on scroll for section headers
+  var parallaxEls = document.querySelectorAll('.section-num');
+  window.addEventListener('scroll', function() {
+    if (window.innerWidth <= 900) return;
+    parallaxEls.forEach(function(el) {
+      var rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        var offset = (window.innerHeight - rect.top) * 0.04;
+        el.style.transform = 'translateY(' + offset + 'px)';
+      }
+    });
+  });
   if (window.innerWidth > 900) {
     var glows = document.querySelectorAll('.hero-glow');
     var bokehs = document.querySelectorAll('.hero .bokeh');
     window.addEventListener('mousemove', function(e) { var x = (e.clientX / window.innerWidth - 0.5) * 20, y = (e.clientY / window.innerHeight - 0.5) * 20; glows.forEach(function(g, i) { g.style.transform = 'translate(' + (x * (i + 1) * 0.7) + 'px, ' + (y * (i + 1) * 0.7) + 'px)'; }); bokehs.forEach(function(b, i) { b.style.transform = 'translate(' + (x * (i + 1) * 0.3) + 'px, ' + (y * (i + 1) * 0.3) + 'px)'; }); });
-    document.querySelectorAll('.principle-card, .heritage-card').forEach(function(card) { card.addEventListener('mousemove', function(e) { var rect = card.getBoundingClientRect(), x = (e.clientX - rect.left) / rect.width - 0.5, y = (e.clientY - rect.top) / rect.height - 0.5; card.style.transform = 'translateY(-8px) perspective(600px) rotateX(' + (y * -4) + 'deg) rotateY(' + (x * 4) + 'deg)'; }); card.addEventListener('mouseleave', function() { card.style.transform = ''; }); });
+    document.querySelectorAll('.principle-card, .heritage-card, .testimonial-card, .event-card, .news-card').forEach(function(card) { card.addEventListener('mousemove', function(e) { var rect = card.getBoundingClientRect(), x = (e.clientX - rect.left) / rect.width - 0.5, y = (e.clientY - rect.top) / rect.height - 0.5; card.style.transform = 'translateY(-8px) perspective(600px) rotateX(' + (y * -4) + 'deg) rotateY(' + (x * 4) + 'deg)'; }); card.addEventListener('mouseleave', function() { card.style.transform = ''; }); });
   }
 })();
 </script>
