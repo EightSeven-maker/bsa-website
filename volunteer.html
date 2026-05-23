@@ -12,44 +12,139 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <script async src="https://tally.so/widgets/embed.js"></script>
 <style>
-:root{--navy-deep:#060e23;--gold-bright:#E6BA56;--gold-deep:#A07823;--cream:#F8F3E7;--ink:#1C2230;--ink-soft:#4A5266}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
-body{font-family:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:var(--navy-deep);color:var(--cream);display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
-.vol-header{display:flex;align-items:center;justify-content:space-between;padding:20px 36px;background:var(--navy-deep);border-bottom:1px solid rgba(230,186,86,0.12);flex-shrink:0}
-.vol-logo{display:flex;align-items:center;gap:14px;text-decoration:none}
-.vol-logo img{width:42px;height:42px;border-radius:50%}
-.vol-logo-text{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:600;color:var(--cream);letter-spacing:0.06em;text-transform:uppercase}
-.vol-back{font-family:"Inter",sans-serif;font-size:13px;font-weight:500;color:rgba(252,248,238,0.5);text-decoration:none;letter-spacing:0.04em;transition:color 0.3s ease;display:flex;align-items:center;gap:8px}
-.vol-back:hover{color:var(--gold-bright)}
-.vol-back .arrow{font-size:16px}
-.vol-stripe{display:flex;height:4px;flex-shrink:0}
-.vol-stripe span{flex:1}
-.vol-stripe span:nth-child(1){background:#6FA34A}
-.vol-stripe span:nth-child(2){background:#D4A33C}
-.vol-stripe span:nth-child(3){background:#E08A38}
-.vol-stripe span:nth-child(4){background:#4F88B6}
-.vol-main{flex:1;display:flex;flex-direction:column;background:#FCF8EE;position:relative}
-.vol-main iframe{flex:1;width:100%;border:0;display:block}
-.vol-footer{padding:16px 36px;background:var(--navy-deep);border-top:1px solid rgba(230,186,86,0.12);text-align:center;flex-shrink:0}
-.vol-footer p{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(252,248,238,0.25)}
-@media(max-width:600px){.vol-header{padding:16px 20px}.vol-logo img{width:34px;height:34px}.vol-logo-text{font-size:16px}.vol-back{font-size:12px}.vol-footer{padding:12px 20px}}
+:root {
+  --navy-deep: #060e23;
+  --gold-bright: #E6BA56;
+  --gold-deep: #A07823;
+  --cream: #F8F3E7;
+  --ink: #1C2230;
+  --ink-soft: #4A5266;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--navy-deep);
+  color: var(--cream);
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+.vol-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 36px;
+  background: var(--navy-deep);
+  border-bottom: 1px solid rgba(230,186,86,0.12);
+  flex-shrink: 0;
+}
+.vol-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+.vol-logo img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+}
+.vol-logo-text {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--cream);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.vol-back {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(252,248,238,0.5);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vol-back:hover { color: var(--gold-bright); }
+.vol-back .arrow { font-size: 16px; }
+
+/* Stripe */
+.vol-stripe {
+  display: flex;
+  height: 4px;
+  flex-shrink: 0;
+}
+.vol-stripe span { flex: 1; }
+.vol-stripe span:nth-child(1) { background: #6FA34A; }
+.vol-stripe span:nth-child(2) { background: #D4A33C; }
+.vol-stripe span:nth-child(3) { background: #E08A38; }
+.vol-stripe span:nth-child(4) { background: #4F88B6; }
+
+/* Form container */
+.vol-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #FCF8EE;
+  position: relative;
+}
+.vol-main iframe {
+  flex: 1;
+  width: 100%;
+  border: 0;
+  display: block;
+}
+
+/* Footer */
+.vol-footer {
+  padding: 16px 36px;
+  background: var(--navy-deep);
+  border-top: 1px solid rgba(230,186,86,0.12);
+  text-align: center;
+  flex-shrink: 0;
+}
+.vol-footer p {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(252,248,238,0.25);
+}
+
+@media (max-width: 600px) {
+  .vol-header { padding: 16px 20px; }
+  .vol-logo img { width: 34px; height: 34px; }
+  .vol-logo-text { font-size: 16px; }
+  .vol-back { font-size: 12px; }
+  .vol-footer { padding: 12px 20px; }
+}
 </style>
 </head>
 <body>
+
 <header class="vol-header">
   <a href="index.html" class="vol-logo">
-    <img src="logo-icon.png" alt="BSA" onerror="this.src='logo.png'">
+    <img src="photo_2026-05-21 10.52.43.jpeg" alt="BSA" onerror="this.src='photo_2026-05-21 10.52.39.jpeg'">
     <span class="vol-logo-text">BSA</span>
   </a>
   <a href="index.html" class="vol-back"><span class="arrow">&larr;</span> Back to Home</a>
 </header>
+
 <div class="vol-stripe"><span></span><span></span><span></span><span></span></div>
+
 <main class="vol-main">
   <iframe data-tally-src="https://tally.so/r/xXlJjG?formEventsForwarding=1" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0" title="BSA Volunteer Onboarding"></iframe>
 </main>
+
 <footer class="vol-footer">
   <p>Breton Sikh Association &middot; Cape Breton, Nova Scotia</p>
 </footer>
+
 </body>
 </html>

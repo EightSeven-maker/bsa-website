@@ -23,6 +23,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/volunteer", "destination": "/volunteer.html" },
     { "source": "/((?!.*\\.).*)", "destination": "/index.html" }
   ]
 }
